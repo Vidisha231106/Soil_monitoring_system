@@ -1,1 +1,1 @@
-
+This is a basic website that takes soil nutrient values, the location and date, from user and uses Google Gemini to suggest what sort of crops can be grown or the additional chemicals that need to be added to the soil.
