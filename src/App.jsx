@@ -23,9 +23,10 @@ const GEMINI_API_KEY = 'AIzaSyD5f0dfrcFHrfvS34_Lg930I8d_Eb7Y-M4';
 
 async function getGeminiOverview(n, p, k, region, date, crop) {
   const prompt = `For a '${crop}' crop in the state of ${region}, India, around the date ${date}, with current soil NPK (N: ${n}, P: ${p}, K: ${k}):
-  ANSWER IN BRIEF AND TO THE POINT
-1. What are the optimal/suggested nutrient levels? Include N, P, K, pH, and Moisture.
+  ANSWER IN BRIEF AND TO THE POINT, ANSWER SHOULD BE IN POINTS
+1. What are the optimal/suggested nutrient levels? Include N, P, K, pH, and Moisture. Write it in a list.
 2. Which crops are best suited to grow here if the npk values are greater than the optimal values?
+3. What cropping practices can be included to make yield better based on the season (based on the date)
 Please answer in this format:
 Suggested Levels: N: <value>, P: <value>, K: <value>, pH: <value>, Moisture: <value>%
 Overview: <brief overview/actions>`;
