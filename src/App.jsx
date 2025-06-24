@@ -140,6 +140,7 @@ export default function App() {
   const [aiOverview, setAiOverview] = useState('');
   const [suggestedLevels, setSuggestedLevels] = useState({ N: 50, P: 30, K: 150, ph: '6.5-7.5', moisture: '60' });
   const [loading, setLoading] = useState(false);
+  const [customTargets, setCustomTargets] = useState({ N: '', P: '', K: '', ph: '' });
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -156,6 +157,11 @@ export default function App() {
 
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
+  };
+
+  const handleCustomTargetChange = (e) => {
+    const { name, value } = e.target;
+    setCustomTargets((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -466,12 +472,36 @@ export default function App() {
             
             <h2 style={styles.h2}>Suggested Nutrient Levels</h2>
             <p id="suggested-nutrients">N: {suggestedLevels.N} mg/kg,<br></br>  P: {suggestedLevels.P} mg/kg,<br></br>  K: {suggestedLevels.K} mg/kg, <br></br> pH Level: {suggestedLevels.ph}, <br></br>Moisture: {suggestedLevels.moisture} %</p>
+            <div style={{ marginTop: '1.5em' }}>
+              <h3 style={{ marginBottom: '0.5em', color: '#4caf50' }}>Custom Target Levels</h3>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1em', marginBottom: '0.5em' }}>
+                <div>
+                  <label style={{ color: '#222' }}>N: </label>
+                  <input name="N" type="number" value={customTargets.N} onChange={handleCustomTargetChange} style={{ width: 70, borderRadius: 6, border: '1px solid #ccc', padding: '0.3em', background: '#fff', color: '#222' }} />
+                </div>
+                <div>
+                  <label style={{ color: '#222' }}>P: </label>
+                  <input name="P" type="number" value={customTargets.P} onChange={handleCustomTargetChange} style={{ width: 70, borderRadius: 6, border: '1px solid #ccc', padding: '0.3em', background: '#fff', color: '#222' }} />
+                </div>
+                <div>
+                  <label style={{ color: '#222' }}>K: </label>
+                  <input name="K" type="number" value={customTargets.K} onChange={handleCustomTargetChange} style={{ width: 70, borderRadius: 6, border: '1px solid #ccc', padding: '0.3em', background: '#fff', color: '#222' }} />
+                </div>
+                <div>
+                  <label style={{ color: '#222' }}>pH: </label>
+                  <input name="ph" type="number" step="0.01" value={customTargets.ph} onChange={handleCustomTargetChange} style={{ width: 70, borderRadius: 6, border: '1px solid #ccc', padding: '0.3em', background: '#fff', color: '#222' }} />
+                </div>
+              </div>
+              <div style={{ color: '#333', fontSize: '1em' }}>
+                Your custom targets: N: {customTargets.N || '-'}, P: {customTargets.P || '-'}, K: {customTargets.K || '-'}, pH: {customTargets.ph || '-'}
+              </div>
+            </div>
           </div>
-        </div>
+      </div>
 
         <div style={styles.card}>
           <div className="control-section">
-            <h2 style={styles.h2}>Control Nutrient Release</h2>
+          <h2 style={{ color: '#388e3c', marginBottom: '1em' }}>Apply Suggested Targets</h2>
             <button 
               id="release-nitrogen" 
               onClick={() => handleNutrientRelease('Nitrogen')}
@@ -500,22 +530,52 @@ export default function App() {
               Release Potassium
             </button>
             <button 
-              id="release-potassium" 
-              onClick={() => handleNutrientRelease('Potassium')}
+              id="release-ph" 
+              onClick={() => handleNutrientRelease('pH')}
               style={styles.greenBtn}
               onMouseOver={(e) => e.target.style.background = '#388e3c'}
               onMouseOut={(e) => e.target.style.background = '#4caf50'}
             >
               Control pH value
             </button>
+
+            <hr style={{ margin: '2em 0', border: 'none', borderTop: '2px dashed #4caf50', opacity: 0.5 }} />
+            <h2 style={{ color: '#388e3c', marginBottom: '1em' }}>Apply Custom Targets</h2>
             <button 
-              id="release-potassium" 
-              onClick={() => handleNutrientRelease('Potassium')}
+              id="custom-n" 
+              onClick={() => handleNutrientRelease(`Custom N: ${customTargets.N}`)}
               style={styles.greenBtn}
-              onMouseOver={(e) => e.target.style.background = '#388e3c'}
+              onMouseOver={(e) => e.target.style.background = '#2e7d32'}
               onMouseOut={(e) => e.target.style.background = '#4caf50'}
             >
-              Control Water content
+              Apply Custom N ({customTargets.N || '-'})
+            </button>
+            <button 
+              id="custom-p" 
+              onClick={() => handleNutrientRelease(`Custom P: ${customTargets.P}`)}
+              style={styles.greenBtn}
+              onMouseOver={(e) => e.target.style.background = '#2e7d32'}
+              onMouseOut={(e) => e.target.style.background = '#4caf50'}
+            >
+              Apply Custom P ({customTargets.P || '-'})
+            </button>
+            <button 
+              id="custom-k" 
+              onClick={() => handleNutrientRelease(`Custom K: ${customTargets.K}`)}
+              style={styles.greenBtn}
+              onMouseOver={(e) => e.target.style.background = '#2e7d32'}
+              onMouseOut={(e) => e.target.style.background = '#4caf50'}
+            >
+              Apply Custom K ({customTargets.K || '-'})
+            </button>
+            <button 
+              id="custom-ph" 
+              onClick={() => handleNutrientRelease(`Custom pH: ${customTargets.ph}`)}
+              style={styles.greenBtn}
+              onMouseOver={(e) => e.target.style.background = '#2e7d32'}
+              onMouseOut={(e) => e.target.style.background = '#4caf50'}
+            >
+              Apply Custom pH ({customTargets.ph || '-'})
             </button>
           </div>
         </div>
